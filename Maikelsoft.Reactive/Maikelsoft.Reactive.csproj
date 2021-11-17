@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Maikelsoft.Monads" Version="1.1.4" />
+    <PackageReference Include="Maikelsoft.Monads" Version="1.2.2" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 

@@ -14,10 +14,23 @@ namespace Maikelsoft.Reactive
 		/// <typeparam name="T"></typeparam>
 		/// <param name="observer"></param>
 		/// <param name="errorMessage"></param>
-		public static void OnNextError<T>(this IObserver<Try<T>> observer, string errorMessage)
+		/// <param name="details"></param>
+		public static void OnNextError<T>(this IObserver<Try<T>> observer, string errorMessage, string? details = null)
 			where T: IEquatable<T>
 		{
-			observer.OnNext(Try.FromError<T>(errorMessage!));
+			observer.OnNext(Try.FromError<T>(errorMessage, details));
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="observer"></param>
+		/// <param name="error"></param>
+		public static void OnNextError<T>(this IObserver<Try<T>> observer, Error error)
+			where T: IEquatable<T>
+		{
+			observer.OnNext(Try.FromError<T>(error));
 		}
 
 		/// <summary>
