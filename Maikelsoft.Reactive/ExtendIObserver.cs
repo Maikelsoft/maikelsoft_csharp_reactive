@@ -1,5 +1,5 @@
 ﻿using System;
-using Maikelsoft.Monads.Immutable;
+using Maikelsoft.Monads;
 
 namespace Maikelsoft.Reactive
 {
@@ -16,7 +16,7 @@ namespace Maikelsoft.Reactive
 		/// <param name="errorMessage"></param>
 		/// <param name="details"></param>
 		public static void OnNextError<T>(this IObserver<Try<T>> observer, string errorMessage, string? details = null)
-			where T: IEquatable<T>
+			where T: notnull
 		{
 			observer.OnNext(Try.FromError<T>(errorMessage, details));
 		}
@@ -28,7 +28,7 @@ namespace Maikelsoft.Reactive
 		/// <param name="observer"></param>
 		/// <param name="error"></param>
 		public static void OnNextError<T>(this IObserver<Try<T>> observer, Error error)
-			where T: IEquatable<T>
+			where T: notnull
 		{
 			observer.OnNext(Try.FromError<T>(error));
 		}
@@ -40,7 +40,7 @@ namespace Maikelsoft.Reactive
 		/// <param name="observer"></param>
 		/// <param name="value"></param>
 		public static void OnNextValue<T>(this IObserver<Try<T>> observer, T value)
-			where T: IEquatable<T>
+			where T: notnull
 		{
 			observer.OnNext(Try.FromValue(value));
 		}

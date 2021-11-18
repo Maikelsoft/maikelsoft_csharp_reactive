@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Reactive.Linq;
-using Maikelsoft.Monads.Immutable;
+using Maikelsoft.Monads;
 
 namespace Maikelsoft.Reactive
 {
@@ -23,8 +23,8 @@ namespace Maikelsoft.Reactive
 		[Pure]
 		public static IObservable<Try<T>> TrySelect<TSource, T>(
 			this IObservable<Try<TSource>> source, Func<TSource, T> selector)
-			where TSource : IEquatable<TSource>
-			where T : IEquatable<T> =>
+			where TSource : notnull
+			where T : notnull =>
 			source.Select(@try => @try.Select(selector));
 
 		/// <summary>
@@ -38,8 +38,8 @@ namespace Maikelsoft.Reactive
 		[Pure]
 		public static IObservable<Try<TResult>> TrySelect<TSource, TResult>(
 			this IObservable<Try<TSource>> source, Func<TSource, int, TResult> selector)
-			where TSource : IEquatable<TSource>
-			where TResult : IEquatable<TResult> =>
+			where TSource : notnull
+			where TResult : notnull =>
 			source.Select((@try, i) => @try.Select(value => selector(value, i)));
 
 
@@ -57,9 +57,9 @@ namespace Maikelsoft.Reactive
 		public static IObservable<Try<TResult>> TryCombineLatest<TSource1, TSource2, TResult>(
 			this IObservable<Try<TSource1>> source1,
 			IObservable<Try<TSource2>> source2, Func<TSource1, TSource2, TResult> resultSelector)
-			where TSource1 : IEquatable<TSource1>
-			where TSource2 : IEquatable<TSource2>
-			where TResult : IEquatable<TResult> =>
+			where TSource1 : notnull
+			where TSource2 : notnull
+			where TResult : notnull =>
 			source1.CombineLatest(source2, (try1, try2) => try1.CombineWith(try2, resultSelector));
 
 		/// <summary>
@@ -76,9 +76,9 @@ namespace Maikelsoft.Reactive
 		public static IObservable<Try<TResult>> TryWithLatestFrom<TSource1, TSource2, TResult>(
 			this IObservable<Try<TSource1>> source1,
 			IObservable<Try<TSource2>> source2, Func<TSource1, TSource2, TResult> resultSelector)
-			where TSource1 : IEquatable<TSource1>
-			where TSource2 : IEquatable<TSource2>
-			where TResult : IEquatable<TResult> =>
+			where TSource1 : notnull
+			where TSource2 : notnull
+			where TResult : notnull =>
 			source1.WithLatestFrom(source2, (try1, try2) => try1.CombineWith(try2, resultSelector));
 
 		/// <summary>
@@ -95,9 +95,9 @@ namespace Maikelsoft.Reactive
 		public static IObservable<Try<TResult>> TryZip<TSource1, TSource2, TResult>(
 			this IObservable<Try<TSource1>> source1,
 			IObservable<Try<TSource2>> source2, Func<TSource1, TSource2, TResult> resultSelector)
-			where TSource1 : IEquatable<TSource1>
-			where TSource2 : IEquatable<TSource2>
-			where TResult : IEquatable<TResult> =>
+			where TSource1 : notnull
+			where TSource2 : notnull
+			where TResult : notnull =>
 			source1.Zip(source2, (try1, try2) => try1.CombineWith(try2, resultSelector));
 
 		#endregion
@@ -115,8 +115,8 @@ namespace Maikelsoft.Reactive
 		[Pure]
 		public static IObservable<Optional<T>> OptionalSelect<TSource, T>(
 			this IObservable<Optional<TSource>> source, Func<TSource, T> selector)
-			where TSource : IEquatable<TSource>
-			where T : IEquatable<T> =>
+			where TSource : notnull
+			where T : notnull =>
 			source.Select(optional => optional.Select(selector));
 
 		/// <summary>
@@ -130,8 +130,8 @@ namespace Maikelsoft.Reactive
 		[Pure]
 		public static IObservable<Optional<TResult>> OptionalSelect<TSource, TResult>(
 			this IObservable<Optional<TSource>> source, Func<TSource, int, TResult> selector)
-			where TSource : IEquatable<TSource>
-			where TResult : IEquatable<TResult> =>
+			where TSource : notnull
+			where TResult : notnull =>
 			source.Select((optional, i) => optional.Select(value => selector(value, i)));
 
 		/// <summary>
@@ -148,9 +148,9 @@ namespace Maikelsoft.Reactive
 		public static IObservable<Optional<TResult>> OptionalCombineLatest<TSource1, TSource2, TResult>(
 			this IObservable<Optional<TSource1>> source1,
 			IObservable<Optional<TSource2>> source2, Func<TSource1, TSource2, TResult> resultSelector)
-			where TSource1 : IEquatable<TSource1>
-			where TSource2 : IEquatable<TSource2>
-			where TResult : IEquatable<TResult> =>
+			where TSource1 : notnull
+			where TSource2 : notnull
+			where TResult : notnull =>
 			source1.CombineLatest(source2, (optional1, optional2) => optional1.CombineWith(optional2, resultSelector));
 
 		/// <summary>
@@ -167,9 +167,9 @@ namespace Maikelsoft.Reactive
 		public static IObservable<Optional<TResult>> OptionalWithLatestFrom<TSource1, TSource2, TResult>(
 			this IObservable<Optional<TSource1>> source1,
 			IObservable<Optional<TSource2>> source2, Func<TSource1, TSource2, TResult> resultSelector)
-			where TSource1 : IEquatable<TSource1>
-			where TSource2 : IEquatable<TSource2>
-			where TResult : IEquatable<TResult> =>
+			where TSource1 : notnull
+			where TSource2 : notnull
+			where TResult : notnull =>
 			source1.WithLatestFrom(source2, (optional1, optional2) => optional1.CombineWith(optional2, resultSelector));
 
 		/// <summary>
@@ -186,9 +186,9 @@ namespace Maikelsoft.Reactive
 		public static IObservable<Optional<TResult>> OptionalZip<TSource1, TSource2, TResult>(
 			this IObservable<Optional<TSource1>> source1,
 			IObservable<Optional<TSource2>> source2, Func<TSource1, TSource2, TResult> resultSelector)
-			where TSource1 : IEquatable<TSource1>
-			where TSource2 : IEquatable<TSource2>
-			where TResult : IEquatable<TResult> =>
+			where TSource1 : notnull
+			where TSource2 : notnull
+			where TResult : notnull =>
 			source1.Zip(source2, (optional1, optional2) => optional1.CombineWith(optional2, resultSelector));
 
 		#endregion
